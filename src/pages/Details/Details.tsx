@@ -14,6 +14,7 @@ import {
   IonLabel, 
   IonList, 
   IonListHeader, 
+  IonLoading, 
   IonNote, 
   IonPage, IonRow, 
   IonSegment, 
@@ -23,7 +24,8 @@ import {
 import { useState } from 'react';
 import axios from 'axios';
 
-const Details: React.FC = () => { 
+const Details: React.FC = () => {
+    const [isLoading, setLoader] = useState<any>(true); 
     const [detailStatus, setDetailStatus] = useState<boolean>(true)
     const [detailsOfHero, setDetails] = useState<any>();
 
@@ -40,17 +42,20 @@ const Details: React.FC = () => {
       axios.get(url).then(res =>{
         console.log(res.data);
         setDetails(res.data);
+        setLoader(false);
       })
     }
     async function getFilms(filmUrl: string) {
       await axios.get(filmUrl).then(async (res)=>{
         filmD = [...filmD, res.data]
+        setLoader(false);
         setlistOfFilms(filmD);
       })
     }
     async function getShips(shipUrl: string) {
       await axios.get(shipUrl).then(async (res)=>{
         shipD = [...shipD, res.data]
+        setLoader(false);
         setlistOfShips(shipD);
       })
     }
@@ -96,6 +101,7 @@ const Details: React.FC = () => {
       </IonToolbar>
       </IonHeader>
       <IonContent>
+      <IonLoading isOpen={isLoading}></IonLoading>
         <IonSegment  onIonChange={e => {changeSegment(e.detail.value, list)}}>
         <IonSegmentButton value='0'>
             <IonLabel>Details</IonLabel>
