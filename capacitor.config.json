@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "StarWar",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
