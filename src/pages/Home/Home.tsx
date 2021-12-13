@@ -1,41 +1,43 @@
-import { 
+import React, { useEffect } from 'react';
+import {
   IonCard, 
   IonCardContent, 
   IonCardHeader, 
   IonCardTitle, 
   IonContent, 
-  IonHeader, 
+  IonHeader,  
   IonPage, 
   IonTitle, 
-  IonToolbar 
-} from '@ionic/react';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+  IonToolbar } from '@ionic/react';
+import { useState } from 'react';
 import './Home.css';
+import axios from 'axios';
 
 const Home: React.FC = () => {
-  const [starWarHero, setStarWars] = useState<any>();
+  const [listItems, setListItems] = useState<any>();
   function getData() {
     let url: string = 'https://swapi.dev/api/people/?format=json'
-    axios.get(url).then(res=>{
-      setStarWars(res.data.results)
+    axios.get(url).then(async res=>{
+      console.log(res.data.results)
+      setListItems(res.data.results)
     })
   }
   function navigateToDetails(url: string) {
+    console.log("url--->", url)
     window.localStorage['urlForDetails'] = url;
     window.location.href = '/details'
     
   }
   useEffect(()=>{
     getData();
-    // console.log(items)
+    console.log(items)
   },[])
-  const items = (starWarHero || []);
+  const items = (listItems || []);
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>STARWAR</IonTitle>
+          <IonTitle>STARWARS</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
